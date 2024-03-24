@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { memo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import * as S from './Layout.styled'
+import * as S from '../../layouts/Layout.styled'
 
 /**
  * Custom List Menu of Sidebar

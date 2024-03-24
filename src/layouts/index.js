@@ -1,5 +1,4 @@
-import ListMenuCustom from './ListItemMenu'
-import Sidebar from './Sidebar'
 import CheckAuth from './CheckAuth'
+import Sidebar from './Sidebar'
 
-export { ListMenuCustom, Sidebar, CheckAuth }
+export { CheckAuth, Sidebar }
