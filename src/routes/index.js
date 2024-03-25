@@ -7,6 +7,7 @@ import BlogView from 'views/blog'
 import BlockedListBlog from 'views/blog/components/BlockedListBlog'
 import DetailBlog from 'views/blog/components/DetailBlog'
 import HistoryView from 'views/history'
+import Login from 'views/login'
 import Overview from 'views/overview'
 import ReportView from 'views/report'
 
@@ -22,4 +23,5 @@ export const routes = [
     { path: '/blog/:id', component: <DetailBlog /> },
     { path: '/report', component: <ReportView /> },
     { path: '/history', component: <HistoryView /> },
+    { path: '/login', component: <Login /> },
 ]
