@@ -1,4 +1,4 @@
-const { default: Client } = require('rest/baseClient');
+import Client from 'rest/baseClient'
 
 const http = new Client()
 

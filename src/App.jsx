@@ -2,6 +2,8 @@ import { Box } from '@mui/material'
 import { Sidebar } from 'layouts'
 import { Route, Routes } from 'react-router-dom'
 import { routes } from 'routes'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
     return (
@@ -19,6 +21,7 @@ function App() {
                     {/* </Route> */}
                 </Routes>
             </Sidebar>
+            <ToastContainer theme="colored" />
         </Box>
     )
 }

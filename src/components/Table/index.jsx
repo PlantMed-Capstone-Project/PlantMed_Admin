@@ -13,7 +13,7 @@ import React, { useEffect } from 'react'
 
 const _borderColor = 'rgba(255, 255, 255, 0.15)'
 const ROW_PER_PAGE = [10, 25, 100]
-const WHITE_COLOR = 'white'
+const WHITE_COLOR = '#fff'
 const BLACK_COLOR = '#000'
 
 const darkTheme = {
@@ -26,21 +26,21 @@ const darkTheme = {
     },
     '& td': {
         borderColor: _borderColor,
-        color: 'white',
+        color: WHITE_COLOR,
     },
 }
 
 const lightTheme = {
-    bgcolor: '#fff',
+    bgcolor: WHITE_COLOR,
     '& thead tr th': {
-        bgcolor: '#fff',
+        bgcolor: WHITE_COLOR,
         color: 'rgba(0, 0, 0, 0.50);',
         fontWeight: 700,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     '& td': {
         borderColor: 'rgba(0, 0, 0, 0.1)',
-        color: 'black',
+        color: BLACK_COLOR,
     },
 }
 
@@ -96,7 +96,7 @@ export default function TableCustom({
     borderColor = _borderColor,
     maxHeight,
     resetPage,
-    theme = 'dark',
+    theme = 'light',
     emptyMessage,
     loading,
     loadingComponent,
@@ -121,6 +121,8 @@ export default function TableCustom({
 
     return (
         <Paper
+            elevation={3}
+            square={false}
             sx={{
                 width: '100%',
                 overflow: 'hidden',

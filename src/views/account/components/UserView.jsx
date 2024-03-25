@@ -3,34 +3,42 @@ import ChipCustom from 'components/ChipTag'
 import TableCustom from 'components/Table'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getExpertPending } from 'rest/api/user'
+import { toast } from 'react-toastify'
+import { blockUser, getAllUsers } from 'rest/api/user'
 import { capitalize } from 'utils/common'
 
-export default function AccountView() {
-    const [experts, setExperts] = useState([])
+export default function UserView() {
+    const [users, setUsers] = useState([])
     const navigate = useNavigate()
 
-    const fetchexperts = async () => {
+    const fetchData = async () => {
         try {
-            const res = await getExpertPending()
-            setExperts(res.data)
+            const res = await getAllUsers()
+            setUsers(res.data)
         } catch (error) {
             console.log(error)
         }
     }
 
-    const handleClick = (id) => {
-        navigate('/account/expert-pending/' + id)
+    const handleClick = async (id, name) => {
+        try {
+            await blockUser(id)
+            toast.success(`User name "${name}" has been blocked!`)
+        } catch (error) {
+            console.log(error)
+            toast.error('Fail to block user')
+        }
+        navigate('/account/users')
     }
 
     useEffect(() => {
-        fetchexperts()
+        fetchData()
     }, [])
 
     return (
         <>
             <Typography component={'h2'} variant="h4" mb={2}>
-                Pending Accounts
+                All Users
             </Typography>
             <TableCustom
                 columns={[
@@ -61,8 +69,8 @@ export default function AccountView() {
                         render: ({ status }) => (
                             <ChipCustom
                                 label={capitalize(status)}
-                                width="90px"
-                                bgColor="#95a5a6"
+                                width="70px"
+                                bgColor="#2ecc71"
                                 textColor="#fff"
                             />
                         ),
@@ -70,18 +78,18 @@ export default function AccountView() {
                     {
                         id: 'action',
                         label: 'Action',
-                        render: ({ id }) => (
+                        render: ({ id, fullName }) => (
                             <Button
-                                variant="outlined"
-                                color="info"
-                                onClick={() => handleClick(id)}
+                                variant="contained"
+                                color="error"
+                                onClick={() => handleClick(id, fullName)}
                             >
-                                More
+                                Block
                             </Button>
                         ),
                     },
                 ]}
-                rows={experts}
+                rows={users}
             />
         </>
     )

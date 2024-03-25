@@ -1,58 +1,60 @@
-import { Button, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import ChipCustom from 'components/ChipTag'
 import TableCustom from 'components/Table'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getExpertPending } from 'rest/api/user'
+import { toast } from 'react-toastify'
+import { getBlockList, restoreBlog } from 'rest/api/blog'
 import { capitalize } from 'utils/common'
 
-export default function AccountView() {
-    const [experts, setExperts] = useState([])
+export default function BlockedListBlog() {
+    const [blogs, setBlogs] = useState([])
     const navigate = useNavigate()
 
-    const fetchexperts = async () => {
+    const fetchData = async () => {
         try {
-            const res = await getExpertPending()
-            setExperts(res.data)
+            const res = await getBlockList()
+            setBlogs(res.data)
         } catch (error) {
             console.log(error)
         }
     }
 
-    const handleClick = (id) => {
-        navigate('/account/expert-pending/' + id)
-    }
-
     useEffect(() => {
-        fetchexperts()
+        fetchData()
     }, [])
 
+    const handleClick = async (id) => {
+        try {
+            await restoreBlog(id)
+            toast.success('Restore blog successful!')
+        } catch (error) {
+            console.log(error)
+            toast.error('Fail to restore blog!')
+        }
+        navigate('/blog/blocked')
+    }
+
     return (
-        <>
+        <Box>
             <Typography component={'h2'} variant="h4" mb={2}>
-                Pending Accounts
+                Blocked List of Blogs
             </Typography>
             <TableCustom
                 columns={[
                     {
-                        id: 'email',
-                        label: 'Email',
+                        id: 'title',
+                        label: 'Title',
                         minWidth: 170,
-                        render: ({ email }) => <Typography>{email}</Typography>,
+                        render: ({ title }) => <Typography>{title}</Typography>,
                     },
                     {
-                        id: 'fullName',
-                        label: 'Name',
+                        id: 'author',
+                        label: 'Author',
                         minWidth: 170,
-                        render: ({ fullName }) => (
-                            <Typography>{fullName}</Typography>
+                        render: ({ user }) => (
+                            <Typography>{user.name}</Typography>
                         ),
-                    },
-                    {
-                        id: 'role',
-                        label: 'Role',
-                        minWidth: 170,
-                        render: ({ role }) => <Typography>{role}</Typography>,
                     },
                     {
                         id: 'status',
@@ -62,7 +64,7 @@ export default function AccountView() {
                             <ChipCustom
                                 label={capitalize(status)}
                                 width="90px"
-                                bgColor="#95a5a6"
+                                bgColor="#e74c3c"
                                 textColor="#fff"
                             />
                         ),
@@ -72,17 +74,17 @@ export default function AccountView() {
                         label: 'Action',
                         render: ({ id }) => (
                             <Button
-                                variant="outlined"
-                                color="info"
+                                variant="contained"
+                                color="success"
                                 onClick={() => handleClick(id)}
                             >
-                                More
+                                Restore
                             </Button>
                         ),
                     },
                 ]}
-                rows={experts}
+                rows={blogs}
             />
-        </>
+        </Box>
     )
 }

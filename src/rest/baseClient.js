@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ACCESS_TOKEN } from 'constant'
-import { readCookie } from 'utils'
+import { readCookie } from 'utils/cookie'
 
 export default class Client {
     constructor() {

@@ -1,13 +1,17 @@
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
 import BadgeIcon from '@mui/icons-material/Badge'
+import BlockIcon from '@mui/icons-material/Block'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import FactCheckIcon from '@mui/icons-material/FactCheck'
+import HistoryIcon from '@mui/icons-material/History'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
-import ManageHistoryIcon from '@mui/icons-material/ManageHistory'
 import MenuIcon from '@mui/icons-material/Menu'
+import RecentActorsIcon from '@mui/icons-material/RecentActors'
 import ReportIcon from '@mui/icons-material/Report'
 import StarsIcon from '@mui/icons-material/Stars'
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 import {
     Box,
     CssBaseline,
@@ -33,14 +37,32 @@ const menu = [
     {
         key: 'account',
         path: '',
-        label: 'Tài Khoản',
+        label: 'Account',
         icon: <AssignmentIndIcon />,
         children: [
             {
                 key: 'expert',
-                path: '/account/expert',
-                label: 'Chuyên Gia',
+                path: '/account/expert-pending',
+                label: 'Expert',
                 icon: <BadgeIcon />,
+            },
+            {
+                key: 'users',
+                path: '/account/users',
+                label: 'All Users',
+                icon: <RecentActorsIcon />,
+            },
+            {
+                key: 'experts',
+                path: '/account/experts',
+                label: 'All Experts',
+                icon: <FactCheckIcon />,
+            },
+            {
+                key: 'blocked',
+                path: '/account/blocked',
+                label: 'Blocked List',
+                icon: <PlaylistRemoveIcon />,
             },
         ],
     },
@@ -53,22 +75,28 @@ const menu = [
             {
                 key: 'all',
                 path: '/blog/all',
-                label: 'Chuyên Gia',
+                label: 'Active',
                 icon: <StarsIcon />,
+            },
+            {
+                key: 'blocked',
+                path: '/blog/blocked',
+                label: 'Blocked',
+                icon: <BlockIcon />,
             },
         ],
     },
     {
         key: 'report',
         path: '/report',
-        label: 'Báo Cáo',
+        label: 'Report',
         icon: <ReportIcon />,
     },
     {
         key: 'history',
         path: '/history',
-        label: 'Lịch Sử',
-        icon: <ManageHistoryIcon />,
+        label: 'History',
+        icon: <HistoryIcon />,
     },
 ]
 
