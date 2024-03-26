@@ -15,7 +15,7 @@ function BlogChart({ data, color }) {
             <XAxis />
             <YAxis />
             <Bar dataKey="uv" fill="#8884d8" label={{ position: 'top' }}>
-                {data.map((entry, index) => (
+                {data.map((_, index) => (
                     <Cell
                         key={`cell-${index}`}
                         fill={color[index % color.length]}

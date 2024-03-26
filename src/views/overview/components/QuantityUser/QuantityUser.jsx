@@ -5,31 +5,31 @@ import BookOutlinedIcon from '@mui/icons-material/BookOutlined'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import * as S from './QuantityUser.styled'
 
-function QuantityUser() {
+function QuantityUser({ totalUser, totalExpert, totalBlog, totalLike }) {
     const dataQuantity = [
         {
             id: 1,
             icon: <PersonOutlineOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: 123,
+            quantity: totalUser ?? 123,
             name: 'User',
         },
         {
             id: 2,
             icon: <AssignmentIndOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: 123,
+            quantity: totalExpert ?? 123,
             name: 'Expert',
         },
         {
             id: 1,
             icon: <BookOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: 123,
+            quantity: totalBlog ?? 123,
             name: 'Blog',
         },
         {
             id: 1,
             icon: <ThumbUpAltOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: 123,
-            name: 'TotalLike',
+            quantity: totalLike ?? 123,
+            name: 'Total Like',
         },
     ]
 

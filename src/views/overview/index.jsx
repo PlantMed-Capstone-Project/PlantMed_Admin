@@ -7,48 +7,91 @@ import CommentChart from './components/CommentChart/CommentChart'
 import CirCleChart from './components/PieChart/PieChart'
 import QuantityUser from './components/QuantityUser/QuantityUser'
 import * as S from './index.styled'
+import { getAllExperts, getAllUsers } from 'rest/api/user'
+import { useEffect, useState } from 'react'
+import { getBlogs } from 'rest/api/blog'
 export default function Overview() {
+    const [totalUser, setTotalUser] = useState(0)
+    const [totalBlog, setTotalBlog] = useState(0)
+    const [totalExpert, setTotalExpert] = useState(0)
+    const [totalLike, setTotalLike] = useState(0)
+    const [mostLikes, setMostLikes] = useState([])
+
+    const getUsers = async () => {
+        try {
+            const res = await getAllUsers()
+            const data = res.data
+            setTotalUser(data.length)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const getExperts = async () => {
+        try {
+            const res = await getAllExperts()
+            const data = res.data
+            setTotalExpert(data.length)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const getBlogList = async () => {
+        try {
+            const res = await getBlogs()
+            const data = res.data
+            console.log(data)
+            setTotalBlog(data.length)
+            const total = [...data].reduce(
+                (sum, curr) => sum + curr.totalLike,
+                0
+            )
+            const most = [...data]
+                .sort((a, b) => b.totalLike - a.totalLike)
+                .slice(0, 5)
+            setTotalLike(total)
+            setMostLikes(most)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getUsers()
+        getExperts()
+        getBlogList()
+    }, [])
+
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink']
-    const colorPieChart = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'pink']
+    const colorPieChart = ['#0088FE', '#00C49F', '#f0932b', '#FF8042', 'pink']
 
     const data = [
         {
-            name: 'Page A',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
+            name: mostLikes[0]?.title,
+            uv: mostLikes[0]?.totalLike,
         },
         {
-            name: 'Page B',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
+            name: mostLikes[1]?.title,
+            uv: mostLikes[1]?.totalLike,
         },
         {
-            name: 'Page C',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
+            name: mostLikes[2]?.title,
+            uv: mostLikes[2]?.totalLike,
         },
         {
-            name: 'Page D',
-            uv: 2780,
-            pv: 3908,
-            amt: 2000,
+            name: mostLikes[3]?.title,
+            uv: mostLikes[3]?.totalLike,
         },
         {
-            name: 'Page E',
-            uv: 1890,
-            pv: 4800,
-            amt: 2181,
+            name: mostLikes[4]?.title,
+            uv: mostLikes[4]?.totalLike,
         },
     ]
 
     const dataPlant = [
-        { name: 'Group A', value: 1 },
-        { name: 'Group B', value: 1 },
-        { name: 'Group C', value: 1 },
-        { name: 'Group D', value: 1 },
+        { name: 'Bán Hạ Nam', value: 232 },
+        { name: 'Nhân Trần', value: 110 },
+        { name: 'Bạc Hà', value: 100 },
+        { name: 'Bách Bộ', value: 122 },
     ]
 
     const dataComment = [
@@ -130,7 +173,12 @@ export default function Overview() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <QuantityUser />
+            <QuantityUser
+                totalBlog={totalBlog}
+                totalExpert={totalExpert}
+                totalLike={totalLike}
+                totalUser={totalUser}
+            />
             <Box
                 sx={{
                     width: '100%',
