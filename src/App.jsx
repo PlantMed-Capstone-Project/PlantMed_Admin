@@ -21,7 +21,7 @@ function App() {
                     {/* </Route> */}
                 </Routes>
             </Sidebar>
-            <ToastContainer theme="colored" />
+            <ToastContainer theme="dark" position="top-center" />
         </Box>
     )
 }

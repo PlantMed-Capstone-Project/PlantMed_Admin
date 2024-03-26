@@ -2,33 +2,33 @@ import { Button, Typography } from '@mui/material'
 import ChipCustom from 'components/ChipTag'
 import TableCustom from 'components/Table'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { blockUser, getAllExperts } from 'rest/api/user'
 import { capitalize } from 'utils/common'
 
 export default function ExpertView() {
     const [experts, setExperts] = useState([])
-    const navigate = useNavigate()
+    const [emptyMessage, setEmptyMessage] = useState('')
 
     const fetchData = async () => {
         try {
             const res = await getAllExperts()
             setExperts(res.data)
         } catch (error) {
-            console.log(error)
+            setEmptyMessage(error.response.data.message)
+            setExperts([])
         }
     }
 
     const handleClick = async (id, name) => {
         try {
             await blockUser(id)
+            fetchData()
             toast.success(`Expert name "${name}" has been blocked!`)
         } catch (error) {
             console.log(error)
             toast.error('Fail to block expert')
         }
-        navigate('/account/experts')
     }
 
     useEffect(() => {
@@ -90,6 +90,7 @@ export default function ExpertView() {
                     },
                 ]}
                 rows={experts}
+                emptyMessage={emptyMessage}
             />
         </>
     )

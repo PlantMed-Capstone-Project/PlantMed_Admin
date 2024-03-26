@@ -3,17 +3,18 @@ import Content from 'components/Content'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { blockBlog, getBlogById, restoreBlog } from 'rest/api/blog'
+import { blockBlog, getBlogById } from 'rest/api/blog'
+import { solvedReport } from 'rest/api/report'
 
-export default function DetailBlog() {
-    const { id } = useParams()
-    const [content, setContent] = useState({})
+export const DetailReport = () => {
+    const { id, reportId } = useParams()
+    const [data, setData] = useState({})
     const navigate = useNavigate()
 
     const fetchById = async () => {
         try {
             const res = await getBlogById(id)
-            setContent(res.data)
+            setData(res.data)
         } catch (error) {
             console.log(error)
         }
@@ -27,22 +28,23 @@ export default function DetailBlog() {
     const handleClick = async (id) => {
         try {
             await blockBlog(id)
+            await solvedReport(reportId)
             toast.success('The block has been blocked!!')
-            navigate('/blog/all')
+            navigate('/report/blog')
         } catch (error) {
             console.log(error)
             toast.error('Fail to block blog')
         }
     }
 
-    const handleRestore = async (id) => {
+    const handleSkip = async () => {
         try {
-            await restoreBlog(id)
-            toast.success('Restore blog successful!')
-            navigate('/blog/all')
+            await solvedReport(reportId)
+            toast.success('Skip blog!')
+            navigate('/report/blog')
         } catch (error) {
             console.log(error)
-            toast.error('Fail to restore blog!')
+            toast.error('Fail to skip blog!')
         }
     }
 
@@ -52,37 +54,33 @@ export default function DetailBlog() {
                 Blog Detail
             </Typography>
             <Paper elevation={3} sx={{ p: 4 }}>
-                <Content {...content} />
+                <Content {...data} />
                 {/* Button section start */}
                 <Stack
                     direction="row"
                     justifyContent="flex-end"
-                    spacing={2}
+                    spacing={1}
                     divider={<Divider orientation="vertical" flexItem />}
                     sx={{ mt: 2 }}
                 >
-                    {content?.status === 'Blocked   ' ? (
-                        <Button
-                            variant="contained"
-                            color="success"
-                            onClick={() => handleRestore(id)}
-                        >
-                            Restore
-                        </Button>
-                    ) : (
-                        <Button
-                            variant="contained"
-                            color="error"
-                            onClick={() => handleClick(id)}
-                        >
-                            Block
-                        </Button>
-                    )}
-
+                    <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => handleClick(id)}
+                    >
+                        Block
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={handleSkip}
+                    >
+                        Skip
+                    </Button>
                     <Button
                         variant="outlined"
                         color="info"
-                        onClick={() => navigate('/blog/all')}
+                        onClick={() => navigate('/report/blog')}
                     >
                         Back
                     </Button>

@@ -2,21 +2,21 @@ import { Button, Typography } from '@mui/material'
 import ChipCustom from 'components/ChipTag'
 import TableCustom from 'components/Table'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getBlockedList, unBlockUser } from 'rest/api/user'
 import { capitalize } from 'utils/common'
 
 export default function BlockedListAccount() {
     const [accounts, setAccounts] = useState([])
-    const navigate = useNavigate()
+    const [emptyMessage, setEmptyMessage] = useState('')
 
     const fetchData = async () => {
         try {
             const res = await getBlockedList()
             setAccounts(res.data)
-        } catch (error) {
-            console.log(error)
+        } catch (e) {
+            setEmptyMessage(e.response.data.message)
+            setAccounts([])
         }
     }
 
@@ -24,11 +24,11 @@ export default function BlockedListAccount() {
         try {
             await unBlockUser(id)
             toast.success(`Account name "${name}" has been unblocked!`)
+            fetchData()
         } catch (error) {
             console.log(error)
             toast.error('Fail to unblock user')
         }
-        navigate('/account/blocked')
     }
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export default function BlockedListAccount() {
     return (
         <>
             <Typography component={'h2'} variant="h4" mb={2}>
-                Blocked List
+                Account Blocked List
             </Typography>
             <TableCustom
                 columns={[
@@ -90,6 +90,7 @@ export default function BlockedListAccount() {
                     },
                 ]}
                 rows={accounts}
+                emptyMessage={emptyMessage}
             />
         </>
     )
