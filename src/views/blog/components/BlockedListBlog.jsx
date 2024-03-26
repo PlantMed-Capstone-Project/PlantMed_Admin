@@ -3,12 +3,12 @@ import ChipCustom from 'components/ChipTag'
 import TableCustom from 'components/Table'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { getBlockList, restoreBlog } from 'rest/api/blog'
+import { getBlockList } from 'rest/api/blog'
 import { capitalize } from 'utils/common'
 
 export default function BlockedListBlog() {
     const [blogs, setBlogs] = useState([])
+    const [emptyMessage, setEmptyMessage] = useState('')
     const navigate = useNavigate()
 
     const fetchData = async () => {
@@ -16,7 +16,8 @@ export default function BlockedListBlog() {
             const res = await getBlockList()
             setBlogs(res.data)
         } catch (error) {
-            console.log(error)
+            setEmptyMessage(error.response.data.message)
+            setBlogs([])
         }
     }
 
@@ -24,15 +25,8 @@ export default function BlockedListBlog() {
         fetchData()
     }, [])
 
-    const handleClick = async (id) => {
-        try {
-            await restoreBlog(id)
-            toast.success('Restore blog successful!')
-        } catch (error) {
-            console.log(error)
-            toast.error('Fail to restore blog!')
-        }
-        navigate('/blog/blocked')
+    const handleRoute = (id) => {
+        navigate('/blog/' + id)
     }
 
     return (
@@ -74,16 +68,17 @@ export default function BlockedListBlog() {
                         label: 'Action',
                         render: ({ id }) => (
                             <Button
-                                variant="contained"
-                                color="success"
-                                onClick={() => handleClick(id)}
+                                variant="outlined"
+                                color="info"
+                                onClick={() => handleRoute(id)}
                             >
-                                Restore
+                                Read
                             </Button>
                         ),
                     },
                 ]}
                 rows={blogs}
+                emptyMessage={emptyMessage}
             />
         </Box>
     )

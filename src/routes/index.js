@@ -8,18 +8,24 @@ import BlockedListBlog from 'views/blog/components/BlockedListBlog'
 import DetailBlog from 'views/blog/components/DetailBlog'
 import HistoryView from 'views/history'
 import Overview from 'views/overview'
-import ReportView from 'views/report'
+import { BlogReport, CommentReport, DetailReport } from 'views/report'
 
 export const routes = [
     { path: '/', component: <Overview /> },
+
     { path: '/account/expert-pending', component: <AccountView /> },
     { path: '/account/expert-pending/:id', component: <DetailAccount /> },
     { path: '/account/users', component: <UserView /> },
     { path: '/account/experts', component: <ExpertView /> },
     { path: '/account/blocked', component: <BlockedListAccount /> },
+
     { path: '/blog/all', component: <BlogView /> },
     { path: '/blog/blocked', component: <BlockedListBlog /> },
     { path: '/blog/:id', component: <DetailBlog /> },
-    { path: '/report', component: <ReportView /> },
+
+    { path: '/report/comment', component: <CommentReport /> },
+    { path: '/report/blog', component: <BlogReport /> },
+    { path: '/report/blog/:id/:reportId', component: <DetailReport /> },
+
     { path: '/history', component: <HistoryView /> },
 ]

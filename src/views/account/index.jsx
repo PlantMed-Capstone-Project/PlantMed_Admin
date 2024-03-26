@@ -8,6 +8,7 @@ import { capitalize } from 'utils/common'
 
 export default function AccountView() {
     const [experts, setExperts] = useState([])
+    const [emptyMessage, setEmptyMessage] = useState('')
     const navigate = useNavigate()
 
     const fetchexperts = async () => {
@@ -15,7 +16,7 @@ export default function AccountView() {
             const res = await getExpertPending()
             setExperts(res.data)
         } catch (error) {
-            console.log(error)
+            setEmptyMessage(error.response.data.message)
         }
     }
 
@@ -82,6 +83,7 @@ export default function AccountView() {
                     },
                 ]}
                 rows={experts}
+                emptyMessage={emptyMessage}
             />
         </>
     )
