@@ -4,7 +4,6 @@ import BlockIcon from '@mui/icons-material/Block'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import FactCheckIcon from '@mui/icons-material/FactCheck'
-// import HistoryIcon from '@mui/icons-material/History'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -14,6 +13,7 @@ import ReportIcon from '@mui/icons-material/Report'
 import StarsIcon from '@mui/icons-material/Stars'
 import SmsFailedIcon from '@mui/icons-material/SmsFailed'
 import AppsOutageIcon from '@mui/icons-material/AppsOutage'
+import LogoutIcon from '@mui/icons-material/Logout'
 import {
     Box,
     CssBaseline,
@@ -27,6 +27,10 @@ import { useTheme } from '@mui/material/styles'
 import ListItemCustom from 'components/ListItemMenu'
 import { useState } from 'react'
 import * as S from './Layout.styled'
+import { clearCookie } from 'utils/cookie'
+import { ACCESS_TOKEN } from 'constant'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const menu = [
     {
@@ -106,12 +110,13 @@ const menu = [
                 icon: <SmsFailedIcon />,
             },
         ],
-    }
+    },
 ]
 
 const Sidebar = ({ children }) => {
     const theme = useTheme()
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate()
 
     const handleDrawerOpen = () => {
         setOpen(true)
@@ -119,6 +124,12 @@ const Sidebar = ({ children }) => {
 
     const handleDrawerClose = () => {
         setOpen(false)
+    }
+
+    const handleLogout = () => {
+        clearCookie(ACCESS_TOKEN)
+        toast.info('You are logged out of dashboard!')
+        navigate('/login')
     }
 
     return (
@@ -139,9 +150,24 @@ const Sidebar = ({ children }) => {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap component="div">
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ flexGrow: 1 }}
+                        >
                             PlantMed
                         </Typography>
+                        <IconButton
+                            size="large"
+                            edge="end"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                            onClick={handleLogout}
+                        >
+                            <LogoutIcon />
+                        </IconButton>
                     </Toolbar>
                 </S.AppBar>
                 <S.Drawer variant="permanent" open={open}>

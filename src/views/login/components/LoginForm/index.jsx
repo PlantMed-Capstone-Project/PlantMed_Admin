@@ -101,15 +101,15 @@ export default function LoginForm() {
     const onSubmit = async () => {
         try {
             const res = await login(inputs)
-            const data = res.data
-            const account = parseJwt(data.accessToken)
+            const token = res.data.accessToken
+            const account = parseJwt(token)
             if (account.Role === 'admin') {
-                createCookie(ACCESS_TOKEN, data.accessToken, data.expiresIn)
+                createCookie(ACCESS_TOKEN, token, 30)
                 clearInput()
-                toast.success('Login successfully!', { position: 'top-right' })
+                toast.success('Login successfully!')
                 navigate('/')
             } else {
-                toast.error('This account is not administration!', {
+                toast.error('This is not administration!', {
                     position: 'top-right',
                 })
             }
