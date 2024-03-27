@@ -9,7 +9,7 @@ import BlockedListBlog from 'views/blog/components/BlockedListBlog'
 import DetailBlog from 'views/blog/components/DetailBlog'
 import HistoryView from 'views/history'
 import Overview from 'views/overview'
-import ReportView from 'views/report'
+import { BlogReport, CommentReport, DetailReport } from 'views/report'
 
 export const routes = [
     { path: '/', component: Overview, layout: Sidebar },
@@ -30,9 +30,14 @@ export const routes = [
         component: BlockedListAccount,
         layout: Sidebar,
     },
+
     { path: '/blog/all', component: BlogView, layout: Sidebar },
     { path: '/blog/blocked', component: BlockedListBlog, layout: Sidebar },
     { path: '/blog/:id', component: DetailBlog, layout: Sidebar },
-    { path: '/report', component: ReportView, layout: Sidebar },
+
+    { path: '/report/comment', component: CommentReport, layout: Sidebar },
+    { path: '/report/blog', component: BlogReport, layout: Sidebar },
+    { path: '/report/blog/:id/:reportId', component: DetailReport, layout: Sidebar },
+
     { path: '/history', component: HistoryView, layout: Sidebar },
 ]

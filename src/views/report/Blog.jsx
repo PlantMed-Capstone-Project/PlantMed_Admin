@@ -3,20 +3,21 @@ import ChipCustom from 'components/ChipTag'
 import TableCustom from 'components/Table'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getBlogs } from 'rest/api/blog'
+import { getBlogList } from 'rest/api/report'
 import { capitalize } from 'utils/common'
 
-export default function BlogView() {
+export const BlogReport = () => {
     const [blogs, setBlogs] = useState([])
     const [emptyMessage, setEmptyMessage] = useState('')
     const navigate = useNavigate()
 
     const fetchData = async () => {
         try {
-            const res = await getBlogs()
+            const res = await getBlogList()
             setBlogs(res.data)
         } catch (error) {
             setEmptyMessage(error.response.data.message)
+            setBlogs([])
         }
     }
 
@@ -24,29 +25,47 @@ export default function BlogView() {
         fetchData()
     }, [])
 
-    const handleClick = (id) => {
-        navigate('/blog/' + id)
+    const handleRoute = (blogId, reportId) => {
+        navigate('/report/blog/' + blogId + '/' + reportId)
     }
 
     return (
         <Box>
             <Typography component={'h2'} variant="h4" mb={2}>
-                Blogs
+                Report Blog List
             </Typography>
             <TableCustom
                 columns={[
                     {
-                        id: 'title',
+                        id: 'blogTitle',
                         label: 'Title',
                         minWidth: 170,
-                        render: ({ title }) => <Typography>{title}</Typography>,
+                        render: ({ blogTitle }) => (
+                            <Typography>{blogTitle}</Typography>
+                        ),
                     },
                     {
                         id: 'author',
                         label: 'Author',
                         minWidth: 170,
-                        render: ({ user }) => (
-                            <Typography>{user.name}</Typography>
+                        render: ({ author }) => (
+                            <Typography>{author}</Typography>
+                        ),
+                    },
+                    {
+                        id: 'annunciator',
+                        label: 'Annunciator',
+                        minWidth: 170,
+                        render: ({ annunciator }) => (
+                            <Typography>{annunciator}</Typography>
+                        ),
+                    },
+                    {
+                        id: 'reportCategory',
+                        label: 'Description',
+                        minWidth: 170,
+                        render: ({ reportCategory }) => (
+                            <Typography>{reportCategory}</Typography>
                         ),
                     },
                     {
@@ -56,8 +75,8 @@ export default function BlogView() {
                         render: ({ status }) => (
                             <ChipCustom
                                 label={capitalize(status)}
-                                width="70px"
-                                bgColor="#2ecc71"
+                                width="90px"
+                                bgColor="#95a5a6"
                                 textColor="#fff"
                             />
                         ),
@@ -65,11 +84,11 @@ export default function BlogView() {
                     {
                         id: 'action',
                         label: 'Action',
-                        render: ({ id }) => (
+                        render: ({ blogId, id }) => (
                             <Button
                                 variant="outlined"
                                 color="info"
-                                onClick={() => handleClick(id)}
+                                onClick={() => handleRoute(blogId, id)}
                             >
                                 Read
                             </Button>

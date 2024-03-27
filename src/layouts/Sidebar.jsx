@@ -4,7 +4,7 @@ import BlockIcon from '@mui/icons-material/Block'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import FactCheckIcon from '@mui/icons-material/FactCheck'
-import HistoryIcon from '@mui/icons-material/History'
+// import HistoryIcon from '@mui/icons-material/History'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -12,6 +12,8 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 import RecentActorsIcon from '@mui/icons-material/RecentActors'
 import ReportIcon from '@mui/icons-material/Report'
 import StarsIcon from '@mui/icons-material/Stars'
+import SmsFailedIcon from '@mui/icons-material/SmsFailed'
+import AppsOutageIcon from '@mui/icons-material/AppsOutage'
 import {
     Box,
     CssBaseline,
@@ -87,16 +89,30 @@ const menu = [
     },
     {
         key: 'report',
-        path: '/report',
+        path: '',
         label: 'Report',
         icon: <ReportIcon />,
+        children: [
+            {
+                key: 'blog',
+                path: '/report/blog',
+                label: 'Blog',
+                icon: <AppsOutageIcon />,
+            },
+            {
+                key: 'comment',
+                path: '/report/comment',
+                label: 'Comment',
+                icon: <SmsFailedIcon />,
+            },
+        ],
     },
-    {
-        key: 'history',
-        path: '/history',
-        label: 'History',
-        icon: <HistoryIcon />,
-    },
+    // {
+    //     key: 'history',
+    //     path: '/history',
+    //     label: 'History',
+    //     icon: <HistoryIcon />,
+    // },
 ]
 
 const Sidebar = ({ children }) => {

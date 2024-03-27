@@ -32,7 +32,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                     </Route>
                 </Routes>
-                <ToastContainer theme="colored" />
+                <ToastContainer theme="dark" position="top-center" />
             </Router>
         </Box>
     )
