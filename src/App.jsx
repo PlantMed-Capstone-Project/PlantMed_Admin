@@ -1,27 +1,39 @@
 import { Box } from '@mui/material'
-import { Sidebar } from 'layouts'
-import { Route, Routes } from 'react-router-dom'
-import { routes } from 'routes'
-import 'react-toastify/dist/ReactToastify.css'
+import { CheckAuth, LoginRoute } from 'layouts'
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { routes } from 'routes'
+import Login from 'views/login'
 
 function App() {
     return (
         <Box>
-            <Sidebar>
+            <Router>
                 <Routes>
-                    {/* <Route element={<CheckAuth />}> */}
-                    {routes.map((item) => (
-                        <Route
-                            key={item.path}
-                            path={item.path}
-                            element={item.component}
-                        />
-                    ))}
-                    {/* </Route> */}
+                    <Route element={<CheckAuth />}>
+                        {routes.map((route) => {
+                            const Page = route.component
+                            const Layout = route.layout
+                            return (
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    element={
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    }
+                                />
+                            )
+                        })}
+                    </Route>
+                    <Route element={<LoginRoute />}>
+                        <Route path="/login" element={<Login />} />
+                    </Route>
                 </Routes>
-            </Sidebar>
-            <ToastContainer theme="dark" position="top-center" />
+                <ToastContainer theme="dark" position="top-center" />
+            </Router>
         </Box>
     )
 }
