@@ -8,10 +8,10 @@ import HistoryIcon from '@mui/icons-material/History'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 import MenuIcon from '@mui/icons-material/Menu'
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 import RecentActorsIcon from '@mui/icons-material/RecentActors'
 import ReportIcon from '@mui/icons-material/Report'
 import StarsIcon from '@mui/icons-material/Stars'
-import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 import {
     Box,
     CssBaseline,
@@ -24,7 +24,6 @@ import {
 import { useTheme } from '@mui/material/styles'
 import ListItemCustom from 'components/ListItemMenu'
 import { useState } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
 import * as S from './Layout.styled'
 
 const menu = [
@@ -113,7 +112,7 @@ const Sidebar = ({ children }) => {
     }
 
     return (
-        <Router>
+        <>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <S.AppBar position="fixed" open={open}>
@@ -162,7 +161,7 @@ const Sidebar = ({ children }) => {
                     {children}
                 </Box>
             </Box>
-        </Router>
+        </>
     )
 }
 

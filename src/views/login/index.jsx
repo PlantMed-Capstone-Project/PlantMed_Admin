@@ -1,5 +1,5 @@
 import * as styleMui from './Login.styled'
-import LoginForm from 'components/LoginForm'
+import LoginForm from 'views/login/components/LoginForm'
 
 function Login() {
     return (

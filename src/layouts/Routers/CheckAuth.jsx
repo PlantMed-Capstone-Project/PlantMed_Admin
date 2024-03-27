@@ -5,7 +5,7 @@ import { readCookie } from 'utils/cookie'
 export default function CheckAuth() {
     const isLogin = readCookie(ACCESS_TOKEN)
     if (!isLogin) {
-        return <Navigate to="login" />
+        return <Navigate to="/login" />
     }
 
     return <Outlet />

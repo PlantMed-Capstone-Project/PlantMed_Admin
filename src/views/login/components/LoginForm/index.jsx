@@ -3,12 +3,16 @@ import PersonIcon from '@mui/icons-material/Person'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { IconButton } from '@mui/material'
-import InputField from 'components/InputField'
-import { validateInputs } from 'components/InputField/validationRules'
+import InputField from 'views/login/components/InputField'
+import { validateInputs } from 'views/login/components/InputField/validationRules'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { login as authLogin } from 'rest/api/auth'
+import { login } from 'rest/api/auth'
 import * as styleMui from './LoginForm.styled'
+import { createCookie } from 'utils/cookie'
+import { ACCESS_TOKEN } from 'constant'
+import { parseJwt } from 'utils/common'
+import { toast } from 'react-toastify'
 
 export default function LoginForm() {
     const navigate = useNavigate()
@@ -47,9 +51,9 @@ export default function LoginForm() {
 
     //Khai báo input
     const renderInputs = () => {
-        return inputFields.map((item) => (
+        return inputFields.map((item, idx) => (
             <InputField
-                key={item.id}
+                key={idx}
                 type={item.type}
                 icon={item.icon}
                 eyeIcon={item.eyeIcon}
@@ -96,11 +100,22 @@ export default function LoginForm() {
 
     const onSubmit = async () => {
         try {
-            await authLogin(inputs)
-            clearInput()
-            return navigate('/')
+            const res = await login(inputs)
+            const data = res.data
+            const account = parseJwt(data.accessToken)
+            if (account.Role === 'admin') {
+                createCookie(ACCESS_TOKEN, data.accessToken, data.expiresIn)
+                clearInput()
+                toast.success('Login successfully!', { position: 'top-right' })
+                navigate('/')
+            } else {
+                toast.error('This account is not administration!', {
+                    position: 'top-right',
+                })
+            }
         } catch (e) {
             console.log(e)
+            toast.error('Login failed! Try again!', { position: 'top-right' })
         }
     }
 
