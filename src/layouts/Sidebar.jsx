@@ -106,13 +106,7 @@ const menu = [
                 icon: <SmsFailedIcon />,
             },
         ],
-    },
-    // {
-    //     key: 'history',
-    //     path: '/history',
-    //     label: 'History',
-    //     icon: <HistoryIcon />,
-    // },
+    }
 ]
 
 const Sidebar = ({ children }) => {

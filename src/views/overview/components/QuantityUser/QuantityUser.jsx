@@ -10,25 +10,25 @@ function QuantityUser({ totalUser, totalExpert, totalBlog, totalLike }) {
         {
             id: 1,
             icon: <PersonOutlineOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: totalUser ?? 123,
+            quantity: totalUser,
             name: 'User',
         },
         {
             id: 2,
             icon: <AssignmentIndOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: totalExpert ?? 123,
+            quantity: totalExpert,
             name: 'Expert',
         },
         {
             id: 1,
             icon: <BookOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: totalBlog ?? 123,
+            quantity: totalBlog,
             name: 'Blog',
         },
         {
             id: 1,
             icon: <ThumbUpAltOutlinedIcon sx={{ fontSize: '3rem' }} />,
-            quantity: totalLike ?? 123,
+            quantity: totalLike,
             name: 'Total Like',
         },
     ]

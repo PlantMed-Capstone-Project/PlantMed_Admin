@@ -7,7 +7,6 @@ import UserView from 'views/account/components/UserView'
 import BlogView from 'views/blog'
 import BlockedListBlog from 'views/blog/components/BlockedListBlog'
 import DetailBlog from 'views/blog/components/DetailBlog'
-import HistoryView from 'views/history'
 import Overview from 'views/overview'
 import { BlogReport, CommentReport, DetailReport } from 'views/report'
 
@@ -38,6 +37,4 @@ export const routes = [
     { path: '/report/comment', component: CommentReport, layout: Sidebar },
     { path: '/report/blog', component: BlogReport, layout: Sidebar },
     { path: '/report/blog/:id/:reportId', component: DetailReport, layout: Sidebar },
-
-    { path: '/history', component: HistoryView, layout: Sidebar },
 ]

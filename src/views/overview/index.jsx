@@ -6,7 +6,7 @@ import BlogChartInfor from './components/BlogChart/BlogChartInfor'
 import CommentChart from './components/CommentChart/CommentChart'
 import CirCleChart from './components/PieChart/PieChart'
 import QuantityUser from './components/QuantityUser/QuantityUser'
-import * as S from './index.styled'
+import * as S from './Overview.styled'
 import { getAllExperts, getAllUsers } from 'rest/api/user'
 import { useEffect, useState } from 'react'
 import { getBlogs } from 'rest/api/blog'
@@ -64,28 +64,10 @@ export default function Overview() {
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink']
     const colorPieChart = ['#0088FE', '#00C49F', '#f0932b', '#FF8042', 'pink']
 
-    const data = [
-        {
-            name: mostLikes[0]?.title,
-            uv: mostLikes[0]?.totalLike,
-        },
-        {
-            name: mostLikes[1]?.title,
-            uv: mostLikes[1]?.totalLike,
-        },
-        {
-            name: mostLikes[2]?.title,
-            uv: mostLikes[2]?.totalLike,
-        },
-        {
-            name: mostLikes[3]?.title,
-            uv: mostLikes[3]?.totalLike,
-        },
-        {
-            name: mostLikes[4]?.title,
-            uv: mostLikes[4]?.totalLike,
-        },
-    ]
+    const data = []
+    for (let i = 0; i < 5; i++) {
+        data.push({ name: mostLikes[i]?.title, uv: mostLikes[i]?.totalLike })
+    }
 
     const dataPlant = [
         { name: 'Bán Hạ Nam', value: 232 },
