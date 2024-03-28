@@ -29,7 +29,7 @@ export const DetailReport = () => {
         try {
             await blockBlog(id)
             await solvedReport(reportId)
-            toast.success('The block has been blocked!!')
+            toast.success('The blog has been blocked!!')
             navigate('/report/blog')
         } catch (error) {
             console.log(error)
