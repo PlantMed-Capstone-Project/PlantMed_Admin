@@ -33,18 +33,18 @@ export const DetailReport = () => {
             navigate('/report/blog')
         } catch (error) {
             console.log(error)
-            toast.error('Fail to block blog')
+            toast.error('Fail to block the blog')
         }
     }
 
     const handleSkip = async () => {
         try {
             await solvedReport(reportId)
-            toast.success('Skip blog!')
+            toast.success('Skip report!')
             navigate('/report/blog')
         } catch (error) {
             console.log(error)
-            toast.error('Fail to skip blog!')
+            toast.error('Fail to skip report!')
         }
     }
 
