@@ -3,16 +3,15 @@ import PersonIcon from '@mui/icons-material/Person'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { IconButton } from '@mui/material'
-import InputField from 'views/login/components/InputField'
-import { validateInputs } from 'views/login/components/InputField/validationRules'
+import { ACCESS_TOKEN } from 'constant'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { login } from 'rest/api/auth'
-import * as styleMui from './LoginForm.styled'
-import { createCookie } from 'utils/cookie'
-import { ACCESS_TOKEN } from 'constant'
-import { parseJwt } from 'utils/common'
 import { toast } from 'react-toastify'
+import { login } from 'rest/api/auth'
+import { createCookie } from 'utils/cookie'
+import InputField from 'views/login/components/InputField'
+import { validateInputs } from 'views/login/components/InputField/validationRules'
+import * as styleMui from './LoginForm.styled'
 
 export default function LoginForm() {
     const navigate = useNavigate()
@@ -101,21 +100,14 @@ export default function LoginForm() {
     const onSubmit = async () => {
         try {
             const res = await login(inputs)
-            const token = res.data.accessToken
-            const account = parseJwt(token)
-            if (account.Role === 'admin') {
-                createCookie(ACCESS_TOKEN, token, 30)
-                clearInput()
-                toast.success('Login successfully!')
-                navigate('/')
-            } else {
-                toast.error('This is not administration!', {
-                    position: 'top-right',
-                })
-            }
+            const { accessToken } = res.data
+            createCookie(ACCESS_TOKEN, accessToken)
+            clearInput()
+            toast.success('Login successfully!')
+            navigate('/')
         } catch (e) {
             console.log(e)
-            toast.error('Login failed! Try again!', { position: 'top-right' })
+            toast.error(e.response.data.message, { position: 'top-right' })
         }
     }
 
