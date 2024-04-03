@@ -16,6 +16,7 @@ function BlogChartInfor({ data, color, circle = false }) {
         >
             {data.map((vl, idx) => (
                 <Box
+                    key={idx}
                     sx={{
                         width: circle ? 'auto' : '100%',
                         display: 'flex',

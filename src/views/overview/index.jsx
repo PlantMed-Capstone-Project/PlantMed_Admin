@@ -39,7 +39,6 @@ export default function Overview() {
         try {
             const res = await getBlogs()
             const data = res.data
-            console.log(data)
             setTotalBlog(data.length)
             const total = [...data].reduce(
                 (sum, curr) => sum + curr.totalLike,
@@ -233,7 +232,7 @@ export default function Overview() {
                     }}
                 >
                     {countPlant.map((vl, idx) => (
-                        <S.boxTotal boxShadow={5}>
+                        <S.boxTotal boxShadow={5} key={vl.id}>
                             {vl.icon}
                             <S.boxTxtTotal>
                                 <Typography
