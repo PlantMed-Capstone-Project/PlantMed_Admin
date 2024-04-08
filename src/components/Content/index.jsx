@@ -1,4 +1,4 @@
-import { CardMedia, Divider, Paper, Stack, Typography } from '@mui/material'
+import { Divider, Paper, Stack, Typography, Link } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 // title = '',
@@ -28,19 +28,26 @@ export default function Content(data) {
                         <Typography>{dataContent?.email}</Typography>
                     </Stack>
                     <Typography variant="h6" mb={2}>
-                        Certificates
+                        There are expert's certificates (PDF link):
                     </Typography>
-                    {dataContent?.certificates.map((item, idx) => (
-                        <CardMedia
-                            sx={{
-                                height: 300,
-                                width: 540,
-                                mb: 4,
-                            }}
-                            image={item.data}
-                            title={'certificate' + idx}
-                        />
-                    ))}
+                    <Stack
+                        direction="column"
+                        divider={<Divider orientation="horizontal" flexItem />}
+                        spacing={2}
+                        sx={{ mb: 2 }}
+                    >
+                        {dataContent?.certificates.map((item, idx) => (
+                            <Link
+                                key={idx}
+                                href={item.link}
+                                underline="none"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {`Certificate ${idx + 1}`}
+                            </Link>
+                        ))}
+                    </Stack>
                 </>
             ) : (
                 <>
