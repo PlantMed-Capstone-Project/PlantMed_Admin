@@ -1,6 +1,29 @@
 import { Divider, Paper, Stack, Typography, Link } from '@mui/material'
 import { useEffect, useState } from 'react'
 
+const RenderCertificate = (data) => {
+    return (
+        <Stack
+            direction="column"
+            divider={<Divider orientation="horizontal" flexItem />}
+            spacing={2}
+            sx={{ mb: 2 }}
+        >
+            {data?.certificates.map((item, idx) => (
+                <Link
+                    key={idx}
+                    href={item.link}
+                    underline="none"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    {`Certificate ${idx + 1}`}
+                </Link>
+            ))}
+        </Stack>
+    )
+}
+
 // title = '',
 // author,
 // fullName,
@@ -30,24 +53,9 @@ export default function Content(data) {
                     <Typography variant="h6" mb={2}>
                         There are expert's certificates (PDF link):
                     </Typography>
-                    <Stack
-                        direction="column"
-                        divider={<Divider orientation="horizontal" flexItem />}
-                        spacing={2}
-                        sx={{ mb: 2 }}
-                    >
-                        {dataContent?.certificates.map((item, idx) => (
-                            <Link
-                                key={idx}
-                                href={item.link}
-                                underline="none"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {`Certificate ${idx + 1}`}
-                            </Link>
-                        ))}
-                    </Stack>
+                    {dataContent?.certificates.length > 0
+                        ? RenderCertificate(dataContent)
+                        : 'There are no certificates'}
                 </>
             ) : (
                 <>
